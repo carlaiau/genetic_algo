@@ -4,29 +4,6 @@ import time
 import statistics
 import sys
 
-class Benchmark:
-    @staticmethod
-    def run(function):
-        timings = []
-
-        stdout = sys.stdout
-        for i in range(100):
-            sys.stdout = None # Disable Output while running
-            startTime = time.time()
-            function()
-            seconds = time.time() - startTime
-            sys.stdout = stdout # Re-enable Stdout
-            timings.append(seconds)
-            mean = statistics.mean(timings)
-            if i < 10 or i % 10 == 9:
-                print("{} {:3.2f} {:3.2f}".format(
-                    1 + i,
-                    mean,
-                    statistics.stdev(timings, mean)
-                    if i > 1 else 0))
-
-
-
 class Chromosome:
     def __init__(self, genes, fitness):
         self.Genes = genes
@@ -72,5 +49,22 @@ def get_best(get_fitness, targetLen, optimalFitness, geneSet, display):
 
 
 
-
+class Benchmark:
+    @staticmethod
+    def run(function):
+        timings = []
+        stdout = sys.stdout
+        for i in range(100):
+            sys.stdout = None
+            startTime = time.time()
+            function()
+            seconds = time.time() - startTime
+            sys.stdout = stdout
+            timings.append(seconds)
+            mean = statistics.mean(timings)
+            if i < 10 or i % 10 == 9:
+                print("{} {:3.2f} {:3.2f}".format(
+                    1 + i, mean,
+                    statistics.stdev(timings, mean)
+                    if i > 1 else 0))
 
