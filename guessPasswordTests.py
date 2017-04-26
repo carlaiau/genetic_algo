@@ -11,8 +11,8 @@ class GuessPasswordTests(unittest.TestCase):
         target = "Hello World!"
         self.guess_password(target)
 
-    def test_Thaddeus(self):
-        target= "Haven't been doing much ae. Course starts in 3 weeks. Will have to get into some study to prepare"
+    def test_Lipsum(self):
+        target= "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
         self.guess_password(target)
 
     def guess_password(self, target):
@@ -23,7 +23,7 @@ class GuessPasswordTests(unittest.TestCase):
             return self.get_fitness(genes, target)
 
         def fnDisplay(candidate):
-            self.display(candidate, startTime)
+            display(candidate, startTime)
 
         optimalFitness = len(target)
         best = genetic.get_best(fnGetFitness, len(target), optimalFitness, self.geneset, fnDisplay)
@@ -34,9 +34,14 @@ class GuessPasswordTests(unittest.TestCase):
         return sum(1 for expected, actual in zip(target, genes)
                     if expected == actual)
 
-    def display(self, candidate, startTime):
-        timeDiff = datetime.datetime.now() - startTime
-        print( "{}\t{}\t{}\t".format(candidate.Genes, candidate.Fitness, timeDiff))
+    def test_benchmark(self):
+        genetic.Benchmark.run(self.test_Hello_World)
+
+
+def display(candidate, startTime):
+    timeDiff = datetime.datetime.now() - startTime
+    print( "{}\t{}\t{}\t".format(candidate.Genes, candidate.Fitness, timeDiff))
+
 
 
 if __name__ == '__main__':
