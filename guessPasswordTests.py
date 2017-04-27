@@ -3,6 +3,19 @@ import datetime
 import genetic
 import unittest
 
+
+def get_fitness(genes, target):
+    return sum(1 for expected, actual in zip(target, genes)
+               if expected == actual)
+
+def display(candidate, startTime):
+    timeDiff = datetime.datetime.now() - startTime
+    print("{}\t{}\t{}\t".format(
+        ''.join(candidate.Genes),
+        candidate.Fitness,
+        timeDiff))
+
+
 class GuessPasswordTests(unittest.TestCase):
 
     geneset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ! "
@@ -11,38 +24,26 @@ class GuessPasswordTests(unittest.TestCase):
         startTime = datetime.datetime.now()
 
         def fnGetFitness(genes):
-            return self.get_fitness(genes, target)
+            return get_fitness(genes, target)
 
         def fnDisplay(candidate):
-            self.display(candidate, startTime)
+            display(candidate, startTime)
 
         optimalFitness = len(target)
         best = genetic.get_best(fnGetFitness, len(target), optimalFitness, self.geneset, fnDisplay)
+        self.assertEqual(''.join(best.Genes), target)
 
-        self.assertEqual(best.Genes, target)
-
-    def get_fitness(self,genes, target):
-        return sum(1 for expected, actual in zip(target, genes)
-                    if expected == actual)
-
-    def display(self, candidate, startTime):
-        timeDiff = datetime.datetime.now() - startTime
-        print( "{}\t{}\t{}\t".format(candidate.Genes, candidate.Fitness, timeDiff))
-
-
-
-    def test_Sentence(self):
-        self.guess_password("Sentence Here")
 
     def test_Random(self):
-        length = 50
+        length = 15
         target = ''.join(random.choice(self.geneset)
                          for _ in range(length))
-        self.guess_password(target)
 
+        self.guess_password(target)
 
     def test_benchmark(self):
         genetic.Benchmark.run(self.test_Random)
+
 
 if __name__ == '__main__':
     unittest.main()
