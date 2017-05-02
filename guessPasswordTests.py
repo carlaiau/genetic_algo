@@ -10,10 +10,11 @@ def get_fitness(genes, target):
 
 def display(candidate, startTime):
     timeDiff = datetime.datetime.now() - startTime
-    print("{}\t{}\t{}\t".format(
+    print("{}\t{}\t".format(
         ''.join(candidate.Genes),
-        candidate.Fitness,
-        timeDiff))
+        candidate.Fitness
+        )
+    )
 
 
 class GuessPasswordTests(unittest.TestCase):
@@ -39,11 +40,9 @@ class GuessPasswordTests(unittest.TestCase):
         target = ''.join(random.choice(self.geneset)
                          for _ in range(length))
 
-        target = "Hey Bro!"
+        target = "Lol he looks like a fkd up old school celebrity! That's good! Niether had omelette and chocolate!"
         self.guess_password(target)
 
-    def test_benchmark(self):
-        genetic.Benchmark.run(self.test_Random)
 
 
 if __name__ == '__main__':

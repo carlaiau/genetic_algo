@@ -4,10 +4,6 @@ import time
 import statistics
 import sys
 
-class Chromosome:
-    def __init__(self, genes, fitness):
-        self.Genes = genes
-        self.Fitness = fitness
 
 def _generate_parent(length, geneSet, get_fitness):
     genes = []
@@ -42,9 +38,8 @@ def get_best(get_fitness, targetLen, optimalFitness, geneSet, display):
         if not optimalFitness > improvement.Fitness:
             return improvement
 
-
 def _get_improvement(new_child, generate_parent):
-    bestParent = generate_parent
+    bestParent = generate_parent()
     yield bestParent
     while True:
         child = new_child(bestParent)
@@ -55,6 +50,12 @@ def _get_improvement(new_child, generate_parent):
             continue
         yield child
         bestParent = child
+
+
+class Chromosome:
+    def __init__(self, genes, fitness):
+        self.Genes = genes
+        self.Fitness = fitness
 
 
 class Benchmark:
