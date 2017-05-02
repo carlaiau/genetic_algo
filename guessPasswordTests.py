@@ -39,6 +39,7 @@ class GuessPasswordTests(unittest.TestCase):
         target = ''.join(random.choice(self.geneset)
                          for _ in range(length))
 
+        target = "Hey Bro!"
         self.guess_password(target)
 
     def test_benchmark(self):
