@@ -4,7 +4,7 @@ import genetic
 
 class EightQueensTests(unittest.TestCase):
 
-    def test(self, size = 30):
+    def main(self, size = 30):
         geneset = [i for i in range(size)]
 
         def fnDisplay(candidate):
@@ -20,6 +20,8 @@ class EightQueensTests(unittest.TestCase):
 
         self.assertTrue(not optimalFitness > best.Fitness)
 
+    def test_benchmark(self):
+        genetic.Benchmark.run(lambda: self.main(20))
 
 
 class Board:
